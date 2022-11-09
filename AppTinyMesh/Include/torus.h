@@ -14,11 +14,13 @@ public:
     Torus() {}
     explicit Torus(const Vector&, double, double);
 
+    ~Torus() {};
+
     double Radius() const;
 
     double Thickness() const;
 
     Vector Center() const;
 
-    ~Torus() {}
+
 };
