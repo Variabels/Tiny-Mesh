@@ -1,5 +1,5 @@
 #pragma once
-
+#define _USE_MATH_DEFINES
 #include "box.h"
 #include "cylinder.h"
 #include "ray.h"

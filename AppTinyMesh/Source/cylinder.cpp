@@ -1,4 +1,6 @@
 #include "cylinder.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <iostream>
 
 Cylinder::Cylinder(double r, double h){

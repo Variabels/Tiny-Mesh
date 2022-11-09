@@ -1,5 +1,6 @@
 #ifndef CONE_H
 #define CONE_H
+#define _USE_MATH_DEFINES
 
 #include <vector>
 #include <iostream>
