@@ -43,6 +43,7 @@ add_executable(${APP} WIN32
     ${INC_DIR}/box.h
     ${INC_DIR}/camera.h
     ${INC_DIR}/color.h
+    ${INC_DIR}/capsule.h
     ${INC_DIR}/cone.h
     ${INC_DIR}/cylinder.h
     ${INC_DIR}/GL.h

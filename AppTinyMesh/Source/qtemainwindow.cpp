@@ -30,7 +30,10 @@ void MainWindow::CreateActions()
 	// Buttons
     //connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(BoxMeshExample()));
     //connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(ConeMeshExample()));
-    connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(TorusExample()));
+    //connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(SphereMeshExample()));
+    connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(CapsuleMeshExample()));
+    //connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(TorusExample()));
+    //connect(uiw.boxMesh, SIGNAL(clicked()), this, SLOT(CylinderMeshExample()));
 	connect(uiw.sphereImplicit, SIGNAL(clicked()), this, SLOT(SphereImplicitExample()));
 	connect(uiw.resetcameraButton, SIGNAL(clicked()), this, SLOT(ResetCamera()));
 	connect(uiw.wireframe, SIGNAL(clicked()), this, SLOT(UpdateMaterial()));
@@ -65,7 +68,7 @@ void MainWindow::BoxMeshExample()
 
 void MainWindow::CylinderMeshExample()
 {
-    Mesh cylinderMesh = Mesh(Cylinder(8,3));
+    Mesh cylinderMesh = Mesh(Cylinder(1.0, 1.0, Vector(.0,0.0,0.0)), 64);
 
     std::vector<Color> cols;
     cols.resize(cylinderMesh.Vertexes());
@@ -78,7 +81,7 @@ void MainWindow::CylinderMeshExample()
 
 void MainWindow::ConeMeshExample()
 {
-    Mesh coneMesh = Mesh(Cone());
+    Mesh coneMesh = Mesh(Cone(1.0,Vector(1.0, 0.0, 0.0), Vector(-1.0, 1.0, 0.0)), 64);
 
     std::vector<Color> cols;
     cols.resize(coneMesh.Vertexes());
@@ -86,6 +89,32 @@ void MainWindow::ConeMeshExample()
         cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
 
     meshColor = MeshColor(coneMesh, cols, coneMesh.VertexIndexes());
+    UpdateGeometry();
+}
+
+void MainWindow::CapsuleMeshExample()
+{
+    Mesh capsuleMesh = Mesh(Capsule(2.0, 10.0,Vector(0.0, 0.0, 0.0)), 64);
+
+    std::vector<Color> cols;
+    cols.resize(capsuleMesh.Vertexes());
+    for (int i = 0; i < cols.size(); i++)
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+
+    meshColor = MeshColor(capsuleMesh, cols, capsuleMesh.VertexIndexes());
+    UpdateGeometry();
+}
+
+void MainWindow::SphereMeshExample()
+{
+    Mesh sphereMesh = Mesh(Sphere(1.0, Vector(0.0, 0.0, 0.0)), 64);
+
+    std::vector<Color> cols;
+    cols.resize(sphereMesh.Vertexes());
+    for (int i = 0; i < cols.size(); i++)
+        cols[i] = Color(double(i) / 6.0, fmod(double(i) * 39.478378, 1.0), 0.0);
+
+    meshColor = MeshColor(sphereMesh, cols, sphereMesh.VertexIndexes());
     UpdateGeometry();
 }
 

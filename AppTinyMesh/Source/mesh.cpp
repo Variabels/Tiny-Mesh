@@ -205,66 +205,241 @@ Mesh::Mesh(const Box& box)
 }
 
 
-Mesh::Mesh(const Cone& c)
+Mesh::Mesh(const Cone& c, const int div)
 {
-  // Vertices
-  vertices.resize(4);
+    const Vector lower = c.Vertex(0);
+    const Vector upper = c.Vertex(1);
+    const double radius = c.Radius();
 
-  for (int i = 0; i < 4; i++)
-  {
-    vertices[i] = Vector(c.edge[i], c.edge[i+1], c.edge[i+2]);
-  }
+    const Vector n = Normalized(upper-lower);
+    Vector x, y;
+    n.Orthonormal(x, y);
 
-  // Normals
-  for(int i = 0; i<4; i++)
-  {
-      normals.push_back(c.normal[i]);
-  }
+    vertices.reserve(div+2);
 
-  // Reserve space for the triangle array
-  varray.reserve(4 * 2);
-  narray.reserve(4 * 3);
+    // Circle slice size
+    const double theta = (2*M_PI)/div;
 
-  for(int i=0; i<4; i++)
-  {
-      AddTriangle( c.edge[i*4], c.edge[i*4+1], c.edge[i*4+2],i);
-  }
+    //Base
+    for (int i=0; i<div; i++)
+    {
+        Vector tmp(x*cos(theta*i)+y*sin(theta*i)+lower);
+        tmp *= radius;
+        vertices.push_back(tmp);
+    }
+
+    vertices.push_back(lower);
+    normals.push_back(-n);
+    for (int i=0; i<div; i++)
+        AddTriangle(vertices.size()-1, i, (i+1)%div, normals.size()-1);
+
+    //Face
+    vertices.push_back(upper);
+    for (int i=0; i<div; i++)
+    {
+        Vector normal = Normalized(vertices[i]-n);
+        normals.push_back(normal);
+        AddTriangle(vertices.size()-1, i, ((i+1)%div), normals.size()-1);
+    }
+
 }
 
-Mesh::Mesh(const Cylinder& c)
+Mesh::Mesh(const Sphere& s, int div)
 {
-  // Vertices
-  vertices.resize(20);
+    double r = s.Radius();
+    Vector c = s.Center();
 
-  for (int i = 0; i < 20; i++)
-  {
-    vertices[i] = c.triangles[i][0];
-    vertices[i] = c.triangles[i][1];
-    vertices[i] = c.triangles[i][2];
-  }
+    int hStep = div;
+    int vStep = div;
+    double x, y, z;
 
-  // Normals
-  for(int i=0; i<20; i++)
-  {
-      normals.push_back(c.normal[i]);
-  }
+    vertices.emplace_back(Vector(c[0], c[1], c[2]+r));
+    normals.push_back(Normalized(vertices.back()));
+    vertices.emplace_back(Vector(c[0], c[1], c[2]-r));
+    normals.push_back(Normalized(vertices.back()));
 
-  // Reserve space for the triangle array
-  varray.reserve(20 * 3);
-  narray.reserve(20 * 3);
+    for(int i=1; i<hStep; i++){
+        for(int j=0; j<vStep; j++){
 
-  for(int i=0; i<20; i++)
-  {
-      AddSmoothTriangle(c.TabTriangles[i][0].GetValue(0,0), c.Normals[i].GetValue(0,0),
-              c.TabTriangles[i][0].GetValue(1,0),c.Normals[i].GetValue(1,0),
-              c.TabTriangles[i][0].GetValue(2,0), c.Normals[i].GetValue(2,0));
-      AddSmoothTriangle(c.TabTriangles[i][1].GetValue(0,0), c.Normals[i].GetValue(0,0),
-              c.TabTriangles[i][1].GetValue(1,0),c.Normals[i].GetValue(1,0),
-              c.TabTriangles[i][1].GetValue(2,0), c.Normals[i].GetValue(2,0));
-      AddSmoothTriangle(c.TabTriangles[i][2].GetValue(0,0), c.Normals[i].GetValue(0,0),
-              c.TabTriangles[i][2].GetValue(1,0),c.Normals[i].GetValue(1,0),
-              c.TabTriangles[i][2].GetValue(2,0), c.Normals[i].GetValue(2,0));
-  }
+            x = sin(M_PI*(double)i/(double)hStep)*cos(2*M_PI*(double)j/(double)vStep)*r;
+            y = sin(M_PI*(double)i/(double)hStep)*sin(2*M_PI*(double)j/(double)vStep)*r;
+            z = cos(M_PI*(double)i/(double)hStep)*r;
+
+            vertices.emplace_back(Vector(x, y, z));
+            normals.push_back(Normalized(vertices.back()));
+        }
+    }
+
+    for(int i = 0; i<vStep-1; i++){
+        AddSmoothTriangle(0, 0, i+2, i+2, i+3, i+3);
+        AddSmoothTriangle(1, 1, Vertexes()-i-1, Vertexes()-i-1, Vertexes()-i-2, Vertexes()-i-2);
+    }
+
+    AddSmoothTriangle(2, 2, 0, 0, 2+vStep-1, 2+vStep-1);
+    AddSmoothTriangle(1, 1, Vertexes()-vStep, Vertexes()-vStep, Vertexes()-1, Vertexes()-1);
+
+
+    for(int i = 0; i<hStep-2; i++){
+        for(int j = 0; j<vStep; j++){
+            int v1 = i*vStep+j+ 2;
+            int v4 = i*vStep+(j+1)%vStep+2;
+            int v2 = (i+1)*vStep+j+2;
+            int v3 = (i+1)*vStep+(j+1)%vStep+2;
+
+            AddSmoothTriangle(v1, v1, v2, v2, v3, v3);
+            AddSmoothTriangle(v4, v4, v1, v1, v3, v3);
+        }
+    }
+}
+
+Mesh::Mesh(const Capsule& c, const int div){
+
+    double r = c.Radius();
+    Vector lower = c.Vertex(0);
+    Vector upper = c.Vertex(1);
+
+    int hStep = div/2;
+    int vStep = div;
+    double x, y, z;
+
+
+    //Sphere du bas
+    vertices.emplace_back(Vector(lower[0], lower[1], lower[2]-r));
+    normals.push_back(Normalized(vertices.back()));
+
+    for(int i=1; i<hStep; i++){
+        for(int j=0; j<vStep; j++){
+
+            x = lower[0]+sin(M_PI/2.*(double)i/(double)hStep)*cos(2*M_PI*(double)j/(double)vStep)*r;
+            y = lower[1]+sin(M_PI/2.*(double)i/(double)hStep)*sin(2*M_PI*(double)j/(double)vStep)*r;
+            z = lower[2]-cos(M_PI/2.*(double)i/(double)hStep)*r;
+
+
+            vertices.emplace_back(Vector(x, y, z));
+            normals.push_back(Normalized(vertices.back()));
+        }
+    }
+
+    for(int i=0; i<vStep-1; i++){
+        AddSmoothTriangle( i+1, i+1, 0, 0, i+2, i+2);
+    }
+
+    AddSmoothTriangle( 0, 0, 1, 1, vStep, vStep);
+
+    for(int i=0; i<hStep-2; i++){
+        for(int j=0; j<vStep; j++){
+            int v1 = i*vStep+j+1;
+            int v4 = i*vStep+(j+1)%vStep+1;
+            int v2 = (i+1)*vStep+j+1;
+            int v3 = (i+1)*vStep+(j+1)%vStep+1;
+
+            AddSmoothTriangle(v2,v2, v1, v1,v3, v3);
+            AddSmoothTriangle(v1, v1, v4, v4, v3, v3);
+        }
+    }
+
+    //Sphere du haut
+    int nbVertex = Vertexes();
+
+    vertices.emplace_back(Vector(upper[0], upper[1], upper[2]+r));
+    normals.push_back(Normalized(vertices.back()));
+
+    for(int i=1; i<hStep; i++){
+        for(int j=0; j<vStep; j++){
+
+            x = upper[0]+sin(M_PI/2.*(double)i/(double)hStep)*cos(2*M_PI*(double)j/(double)vStep)*r;
+            y = upper[1]+sin(M_PI/2.*(double)i/(double)hStep)*sin(2*M_PI*(double)j/(double)vStep)*r;
+            z = upper[2]+cos(M_PI/2.*(double)i/(double)hStep)*r;
+
+            vertices.emplace_back(Vector(x, y, z));
+            normals.push_back(Normalized(vertices.back()));
+        }
+    }
+
+
+    for(int i=0; i<vStep-1; i++){
+        AddSmoothTriangle(nbVertex, nbVertex, nbVertex+i+1, nbVertex+i+1, nbVertex+i+2, nbVertex+i+2);
+    }
+
+    AddSmoothTriangle(nbVertex+1, nbVertex+1, nbVertex, nbVertex, nbVertex+vStep, nbVertex+vStep);
+
+    for(int i=0; i<hStep-2; i++){
+        for(int j=0; j<vStep; j++){
+            int v1 = i*vStep+j+1+nbVertex;
+            int v4 = i*vStep+(j+1)%vStep+1+nbVertex;
+            int v2 = (i+1)*vStep+j+1+nbVertex;
+            int v3 = (i+1)*vStep+(j+1)%vStep+1+nbVertex;
+
+            AddSmoothTriangle(v1, v1, v2, v2, v3, v3);
+            AddSmoothTriangle(v4, v4, v1, v1, v3, v3);
+        }
+    }
+
+
+    //todo: fix cylinder
+
+    int v1 = Vertexes()/2-vStep;
+    int v2 = Vertexes()-vStep;
+
+    for(int i=0; i<vStep-1; i++){
+        AddSmoothTriangle(v1+i, v1+i, v1+i+1, v1+i+1, v2+i, v2+i);
+        AddSmoothTriangle(v2+i, v2+i, v1+i+1, v1+i+1, v2+i+1, v2+i+1);
+    }
+
+    AddSmoothTriangle(v1+vStep-1, v1+vStep-1, v1, v1, v2, v2);
+    AddSmoothTriangle(v2, v2, v2+vStep-1, v2+vStep-1, v1+vStep-1, v1+vStep-1);
+
+}
+
+Mesh::Mesh(const Cylinder& c, int div)
+{
+    const Vector lower = c.Vertex(0);
+    const Vector upper = c.Vertex(1);
+    const double radius = c.Radius();
+
+    const Vector n = Normalized(upper-lower);
+    Vector x, y;
+    n.Orthonormal(x, y);
+
+    vertices.reserve((div*2)+2);
+
+    const double theta = (2*M_PI)/div;
+
+    //Cercle du haut
+    for (int i=0; i<div; i++)
+    {
+        Vector tmp(x*cos(theta*i)+y*sin(theta*i)+lower);
+        tmp *= radius;
+        vertices.push_back(tmp);
+    }
+
+    vertices.push_back(lower);
+    normals.push_back(-n);
+    for (int i=0; i<div; i++)
+        AddTriangle(vertices.size()-1, i, (i+1)%div, normals.size()-1);
+
+    //Cercle du bas
+    int offset = vertices.size();
+    for (int i=0; i<div; i++)
+    {
+        Vector tmp(x*cos(theta*i)+y*sin(theta*i)+upper);
+        tmp *= radius;
+        vertices.push_back(tmp);
+    }
+
+    vertices.push_back(upper);
+    normals.push_back(n);
+    for (int i=0; i<div; i++)
+        AddTriangle(vertices.size()-1, i+offset, ((i+1)%div)+offset, normals.size()-1);
+
+    //Face
+    for (int i=0; i<div; i++)
+    {
+        Vector normal = Normalized(vertices[i]-n);
+        normals.push_back(normal);
+        AddTriangle(i, (i+1)%div, offset+i, normals.size()-1);
+        AddTriangle(offset+i, offset+((1+i)%div), (i+1)%div, normals.size()-1);
+    }
 }
 
 Mesh::Mesh(const Torus& t, const int res)
@@ -298,7 +473,6 @@ Mesh::Mesh(const Torus& t, const int res)
         }
     }
 
-    // Ajout de la derniere ligne de triangles
     for (int i = 0; i<vStep-1; i++) {
         int v1 = (hStep-1)*vStep+i;
         int v2 = (hStep-1)*vStep+i+1;
@@ -308,7 +482,6 @@ Mesh::Mesh(const Torus& t, const int res)
         AddSmoothQuadrangle(v4,v4,v2,v2,v1,v1,v3,v3);
     }
 
-    // Ajout du dernier rectangle
     AddSmoothQuadrangle(0, 0,(hStep-1)*vStep,(hStep-1)*vStep,(hStep-1)*vStep+vStep-1,(hStep-1)*vStep+vStep-1,vStep-1,vStep-1);
 }
 
