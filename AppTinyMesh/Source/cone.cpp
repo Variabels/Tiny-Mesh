@@ -1,22 +1,16 @@
 #include "cone.h"
 
-Cone::Cone()
+Cone::Cone(double r, const Vector & b, const Vector & t)
 {
-
+    lower = b;
+    upper = t;
+    radius = r;
 }
 
-const int Cone::edge[] =
-{
-    0, 1, 2,
-    2, 1, 3,
-    3, 1, 4,
-    4, 1, 0
-};
+double Cone::Radius() const {
+    return radius;
+}
 
-const Vector Cone::normal[] =
-{
-  Vector(cos(0)/sqrt(2.f),1.f/sqrt(2.f),sin(0)/sqrt(2.f)),
-  Vector(cos(M_PI/2)/sqrt(2.f),1.f/sqrt(2.f),sin(M_PI/2)/sqrt(2.f)),
-  Vector(cos(M_PI)/sqrt(2.f),1.f/sqrt(2.f),sin(M_PI)/sqrt(2.f)),
-  Vector(cos(3*M_PI/2)/sqrt(2.f),1.f/sqrt(2.f),sin(3*M_PI/2)/sqrt(2.f))
-};
+Vector Cone::Vertex(int n) const {
+    return Vector((n & 1) ? upper[0] : lower[0], (n & 2) ? upper[1] : lower[1], (n & 4) ? upper[2] : lower[2]);
+}

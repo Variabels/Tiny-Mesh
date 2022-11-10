@@ -9,11 +9,18 @@
 
 class Cone{
 
-public:
-    Cone();
-    Vector Vertex(int) const;
-    static const int edge[12];
-    static const Vector normal[4];
+    public:
+        Cone() {}
+        explicit Cone(double,const Vector&,const Vector&);
+
+        ~Cone() {};
+
+        Vector Vertex(int) const;
+        double Radius() const;
+
+    private:
+        Vector lower, upper;
+        double radius;
 };
 
 #endif // CONE_H

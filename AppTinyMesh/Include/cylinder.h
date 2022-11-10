@@ -12,19 +12,16 @@ class Cylinder
 {
     public:
         Cylinder() {}
-        explicit Cylinder(double,double);
+        explicit Cylinder(double,double,const Vector&);
 
+        ~Cylinder() {};
 
+        double Radius() const;
+        Vector Vertex(int) const;
 
-    public:
-        static const int nbr_edges;
-        static const int* edge;
-        static const int nbr_normals;
-        Vector normal[20];
-        Vector triangles[20][3];
-        Matrix Normals[20];
-        Matrix TabTriangles[20][3];
-        double coordonnee(int, int);
+    private:
+        Vector lower, upper;
+        double radius;
 };
 
 #endif // CYLINDER_H
