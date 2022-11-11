@@ -13,6 +13,7 @@ protected:
 public:
   explicit MeshColor();
   explicit MeshColor(const Mesh&);
+  explicit MeshColor(const Mesh&, double, bool);
   explicit MeshColor(const Mesh&, const std::vector<Color>&, const std::vector<int>&);
   ~MeshColor();
 
