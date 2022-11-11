@@ -17,11 +17,14 @@ class Cylinder
         ~Cylinder() {};
 
         double Radius() const;
+        double Height() const;
+        Vector Center() const;
         Vector Vertex(int) const;
 
     private:
         Vector lower, upper;
-        double radius;
+        Vector center;
+        double radius, height;
 };
 
 #endif // CYLINDER_H

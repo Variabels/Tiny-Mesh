@@ -4,13 +4,25 @@
 #include <iostream>
 
 Cylinder::Cylinder(double r, double h, const Vector & c){
+
+    center = c;
+    radius = r;
+    height = h;
     lower = c;
     upper = lower + Vector(h, 0.0, 0.0);
-    radius = r;
+
 }
 
 double Cylinder::Radius() const {
     return radius;
+}
+
+double Cylinder::Height() const {
+    return height;
+}
+
+Vector Cylinder::Center() const {
+    return center;
 }
 
 Vector Cylinder::Vertex(int n) const {

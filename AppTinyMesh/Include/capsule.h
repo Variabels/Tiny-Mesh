@@ -17,12 +17,13 @@ class Capsule
 
         ~Capsule() {};
 
-        Vector Vertex(int) const;
+        Vector Center() const;
         double Radius() const;
+        double Height() const;
 
     private:
-        double radius;
-        Vector upper, lower;
+        double radius, height;
+        Vector center;
    };
 
 #endif // CAPSULE_H
