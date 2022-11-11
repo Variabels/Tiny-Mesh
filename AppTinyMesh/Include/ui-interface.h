@@ -44,6 +44,14 @@ public:
     QPushButton *boxMesh;
     QPushButton *resetcameraButton;
     QPushButton *sphereImplicit;
+    QPushButton *sphereMesh;
+    QPushButton *coneMesh;
+    QPushButton *capsuleMesh;
+    QPushButton *cylinderMesh;
+    QPushButton *torusMesh;
+    QPushButton *sphereWarpMesh;
+    QPushButton *mushroomMesh;
+    QPushButton *heightFieldMesh;
     QWidget *widget_GL;
     QGroupBox *Parameters_groupBox;
     QGroupBox *groupBox_4;
@@ -111,6 +119,38 @@ public:
         sphereImplicit->setObjectName(QString::fromUtf8("sphereImplicit"));
         sphereImplicit->setGeometry(QRect(20, 50, 101, 23));
         sphereImplicit->setCheckable(false);
+        sphereMesh = new QPushButton(Objects_groupBox);
+        sphereMesh->setObjectName(QString::fromUtf8("sphereMesh"));
+        sphereMesh->setGeometry(QRect(20, 80, 101, 23));
+        sphereMesh->setCheckable(false);
+        coneMesh = new QPushButton(Objects_groupBox);
+        coneMesh->setObjectName(QString::fromUtf8("coneMesh"));
+        coneMesh->setGeometry(QRect(20, 110, 101, 23));
+        coneMesh->setCheckable(false);
+        capsuleMesh = new QPushButton(Objects_groupBox);
+        capsuleMesh->setObjectName(QString::fromUtf8("capsuleMesh"));
+        capsuleMesh->setGeometry(QRect(20, 140, 101, 23));
+        capsuleMesh->setCheckable(false);
+        cylinderMesh = new QPushButton(Objects_groupBox);
+        cylinderMesh->setObjectName(QString::fromUtf8("cylinderMesh"));
+        cylinderMesh->setGeometry(QRect(20, 170, 101, 23));
+        cylinderMesh->setCheckable(false);
+        torusMesh = new QPushButton(Objects_groupBox);
+        torusMesh->setObjectName(QString::fromUtf8("torusMesh"));
+        torusMesh->setGeometry(QRect(20, 200, 101, 23));
+        torusMesh->setCheckable(false);
+        sphereWarpMesh = new QPushButton(Objects_groupBox);
+        sphereWarpMesh->setObjectName(QString::fromUtf8("sphereWarpMesh"));
+        sphereWarpMesh->setGeometry(QRect(20, 230, 101, 23));
+        sphereWarpMesh->setCheckable(false);
+        mushroomMesh = new QPushButton(Objects_groupBox);
+        mushroomMesh->setObjectName(QString::fromUtf8("mushroomMesh"));
+        mushroomMesh->setGeometry(QRect(20, 260, 101, 23));
+        mushroomMesh->setCheckable(false);
+        heightFieldMesh = new QPushButton(Objects_groupBox);
+        heightFieldMesh->setObjectName(QString::fromUtf8("heightFieldMesh"));
+        heightFieldMesh->setGeometry(QRect(20, 290, 101, 23));
+        heightFieldMesh->setCheckable(false);
 
         hboxLayout->addWidget(Objects_groupBox);
 
@@ -218,6 +258,87 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
         sphereImplicit->setText(QCoreApplication::translate("Assets", "Sphere Implicit", nullptr));
+
+#if QT_CONFIG(tooltip)
+        sphereMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        sphereMesh->setText(QCoreApplication::translate("Assets", "Sphere Mesh", nullptr));
+
+#if QT_CONFIG(tooltip)
+        coneMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        coneMesh->setText(QCoreApplication::translate("Assets", "Cone Mesh", nullptr));
+
+#if QT_CONFIG(tooltip)
+        capsuleMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        capsuleMesh->setText(QCoreApplication::translate("Assets", "Capsule Mesh", nullptr));
+
+#if QT_CONFIG(tooltip)
+        cylinderMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        cylinderMesh->setText(QCoreApplication::translate("Assets", "Cylinder Mesh", nullptr));
+
+#if QT_CONFIG(tooltip)
+        torusMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        torusMesh->setText(QCoreApplication::translate("Assets", "Torus Mesh", nullptr));
+
+#if QT_CONFIG(tooltip)
+        sphereWarpMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        sphereWarpMesh->setText(QCoreApplication::translate("Assets", "SphereWarp", nullptr));
+
+#if QT_CONFIG(tooltip)
+        mushroomMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        mushroomMesh->setText(QCoreApplication::translate("Assets", "Mushroom", nullptr));
+
+#if QT_CONFIG(tooltip)
+        heightFieldMesh->setToolTip(QCoreApplication::translate("Assets", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#5500ff;\">Callback #01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic; color:#aa00ff;\">Create Eurographics 1996 Bear</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        heightFieldMesh->setText(QCoreApplication::translate("Assets", "HeightField", nullptr));
+
         Parameters_groupBox->setTitle(QString());
         groupBox_4->setTitle(QCoreApplication::translate("Assets", " Statistics", nullptr));
         label_2->setText(QCoreApplication::translate("Assets", "Vertex", nullptr));

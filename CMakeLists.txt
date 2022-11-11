@@ -48,6 +48,7 @@ add_executable(${APP} WIN32
     ${INC_DIR}/cylinder.h
     ${INC_DIR}/GL.h
     ${INC_DIR}/glew.h
+    ${INC_DIR}/heightField.h
     ${INC_DIR}/implicits.h
     ${INC_DIR}/matrix.h
     ${INC_DIR}/mathematics.h
@@ -59,6 +60,7 @@ add_executable(${APP} WIN32
     ${INC_DIR}/shader-api.h
     ${INC_DIR}/sphere.h
     ${INC_DIR}/torus.h
+    ${INC_DIR}/ui-interface.h
 )
 set_target_properties(${APP} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
 

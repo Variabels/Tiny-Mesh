@@ -4,6 +4,7 @@
 #include "ui-interface.h"
 #include "realtime.h"
 #include "meshcolor.h"
+#include "heightField.h"
 
 class MainWindow : public QMainWindow
 {
@@ -28,7 +29,10 @@ public slots:
   void SphereMeshExample();
   void CapsuleMeshExample();
   void ConeMeshExample();
+  void MushroomExample();
   void SphereImplicitExample();
+  void SphereWarpExample();
+  void HeightFieldExample();
   void TorusExample();
   void ResetCamera();
   void UpdateMaterial();
