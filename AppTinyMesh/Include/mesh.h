@@ -130,10 +130,17 @@ public:
   explicit Mesh(const Cone&, const int);
   explicit Mesh(const Torus&, const int);
   explicit Mesh(const Sphere&, const int);
+  explicit Mesh(const Sphere&, const int, const int);
   explicit Mesh(const Capsule&, const int);
+  explicit Mesh(const Cylinder&, const int,const int);
 
   void Load(const QString&);
   void SaveObj(const QString&, const QString&) const;
+
+  void Merge(const Mesh&);
+  void Transform(const Matrix&);
+  void SphereWarp(const Sphere&,const Vector&);
+
 protected:
   void AddTriangle(int, int, int, int);
   void AddSmoothTriangle(int, int, int, int, int, int);
